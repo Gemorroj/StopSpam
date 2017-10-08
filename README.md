@@ -9,6 +9,24 @@
 - ext-curl
 
 
+### Installation:
+
+- add to composer.json:
+
+```json
+{
+    "require": {
+        "gemorroj/stop-spam": "dev-master"
+    }
+}
+```
+- install:
+
+```bash
+$ php composer.phar update gemorroj/stop-spam
+```
+
+
 ### Example:
 
 ```php
