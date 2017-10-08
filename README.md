@@ -1,4 +1,4 @@
-# Wrapper for API stopforumspam.org
+# Wrapper for API www.stopforumspam.com (api.stopforumspam.org) 
 
 [![Build Status](https://secure.travis-ci.org/Gemorroj/StopSpam.png?branch=master)](https://travis-ci.org/Gemorroj/StopSpam)
 
