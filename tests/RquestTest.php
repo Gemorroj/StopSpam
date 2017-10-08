@@ -3,10 +3,11 @@ namespace StopSpam\Tests;
 
 use StopSpam\Request;
 use StopSpam\Query;
+use StopSpam\Response;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
-    public function test()
+    public function testSync()
     {
         $query = new Query();
         $query->addIp('1.2.3.4');
@@ -18,5 +19,19 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         var_dump($response->getSingleIp());
         var_dump($response->getSingleIp());
         var_dump($response->getSingleIp());
+    }
+
+    public function testAsync()
+    {
+        $query = new Query();
+        $query->addIp('1.2.3.4');
+        $query->addIp('1.2.3.5');
+
+        $request = new Request();
+        $request->sendAsync($query, function (Response $response) {
+            var_dump($response->getSingleIp());
+            var_dump($response->getSingleIp());
+            var_dump($response->getSingleIp());
+        });
     }
 }
