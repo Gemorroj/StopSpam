@@ -12,15 +12,20 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $query = new Query();
         $query->addIp('1.2.3.4');
         $query->addIp('1.2.3.5');
+        $query->addUsername('putin');
+        $query->addEmail('test@test.test');
 
         $request = new Request();
         $response = $request->send($query);
 
-        $this->checkResponse(
+        $this->checkIpResponse(
             $response->getFlowingIp(),
             $response->getFlowingIp(),
             $response->getFlowingIp()
         );
+
+        $this->checkUsernameResponse($response->getFlowingUsername());
+        $this->checkEmailResponse($response->getFlowingEmail());
     }
 
     public function testAsync()
@@ -31,7 +36,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $request = new Request();
         $request->sendAsync($query, function (Response $response) {
-            $this->checkResponse(
+            $this->checkIpResponse(
                 $response->getFlowingIp(),
                 $response->getFlowingIp(),
                 $response->getFlowingIp()
@@ -40,7 +45,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    private function checkResponse($firstItem, $secondItem, $thirdItem)
+    private function checkIpResponse($firstItem, $secondItem, $thirdItem)
     {
         $this->assertEquals('1.2.3.4', $firstItem->getValue());
         $this->assertTrue($firstItem->isAppears());
@@ -52,6 +57,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($thirdItem);
     }
 
+    private function checkUsernameResponse($item)
+    {
+        $this->assertEquals('putin', $item->getValue());
+        $this->assertFalse($item->isAppears());
+    }
+
+    private function checkEmailResponse($item)
+    {
+        $this->assertEquals('test@test.test', $item->getValue());
+        $this->assertTrue($item->isAppears());
+    }
 
     /**
      * @expectedException \StopSpam\Exception\RequestException
