@@ -5,7 +5,7 @@
 
 ### Requirements:
 
-- PHP >= 5.5.9
+- PHP >= 5.6
 - ext-curl
 
 
