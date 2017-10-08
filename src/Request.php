@@ -9,10 +9,20 @@ use StopSpam\Exception\RequestException;
 
 class Request
 {
+    /**
+     * @var Options
+     */
     private $options;
+    /**
+     * @var Client
+     */
     private $client;
 
 
+    /**
+     * Request constructor.
+     * @param Options|null $options
+     */
     public function __construct(Options $options = null)
     {
         $this->options = $options ?: new Options();
@@ -22,6 +32,11 @@ class Request
     }
 
 
+    /**
+     * @param Query $query
+     * @return Response
+     * @throws RequestException
+     */
     public function send(Query $query)
     {
         $response = $this->client->request('GET', Uri::fromParts([
@@ -39,6 +54,10 @@ class Request
     }
 
 
+    /**
+     * @param Query $query
+     * @param callable $fn
+     */
     public function sendAsync(Query $query, callable $fn)
     {
         $promise = $this->client->requestAsync('GET', Uri::fromParts([

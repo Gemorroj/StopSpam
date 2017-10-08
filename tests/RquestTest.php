@@ -16,9 +16,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $response = $request->send($query);
 
-        var_dump($response->getSingleIp());
-        var_dump($response->getSingleIp());
-        var_dump($response->getSingleIp());
+        var_dump($response->getFlowingIp());
+        var_dump($response->getFlowingIp());
+        var_dump($response->getFlowingIp());
     }
 
     public function testAsync()
@@ -29,9 +29,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $request = new Request();
         $request->sendAsync($query, function (Response $response) {
-            var_dump($response->getSingleIp());
-            var_dump($response->getSingleIp());
-            var_dump($response->getSingleIp());
+            var_dump($response->getFlowingIp());
+            var_dump($response->getFlowingIp());
+            var_dump($response->getFlowingIp());
         });
     }
 }

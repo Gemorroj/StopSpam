@@ -6,8 +6,16 @@ use StopSpam\Exception\RequestException;
 
 class Response
 {
+    /**
+     * @var array
+     */
     private $data;
 
+    /**
+     * Response constructor.
+     * @param ResponseInterface $response
+     * @throws RequestException
+     */
     public function __construct(ResponseInterface $response)
     {
         $this->data = \GuzzleHttp\json_decode((string)$response->getBody(), true);
@@ -26,8 +34,15 @@ class Response
     }
 
 
-    public function getSingleIp()
+    /**
+     * @return bool|Item
+     */
+    public function getFlowingIp()
     {
+        if (!isset($this->data['ip'])) {
+            return false;
+        }
+
         $value = \current($this->data['ip']);
         if (false === $value) {
             return false;
@@ -37,8 +52,15 @@ class Response
         return new Item($value);
     }
 
-    public function getSingleUsername()
+    /**
+     * @return bool|Item
+     */
+    public function getFlowingUsername()
     {
+        if (!isset($this->data['username'])) {
+            return false;
+        }
+
         $value = \current($this->data['username']);
         if (false === $value) {
             return false;
@@ -48,8 +70,15 @@ class Response
         return new Item($value);
     }
 
-    public function getSingleEmail()
+    /**
+     * @return bool|Item
+     */
+    public function getFlowingEmail()
     {
+        if (!isset($this->data['email'])) {
+            return false;
+        }
+
         $value = \current($this->data['email']);
         if (false === $value) {
             return false;
@@ -59,8 +88,15 @@ class Response
         return new Item($value);
     }
 
+    /**
+     * @return array
+     */
     public function getIp()
     {
+        if (!isset($this->data['ip'])) {
+            return [];
+        }
+
         $out = [];
         foreach ($this->data['ip'] as $item) {
             $out[] = new Item($item);
@@ -68,8 +104,15 @@ class Response
         return $out;
     }
 
+    /**
+     * @return array
+     */
     public function getUsername()
     {
+        if (!isset($this->data['username'])) {
+            return [];
+        }
+
         $out = [];
         foreach ($this->data['username'] as $item) {
             $out[] = new Item($item);
@@ -77,8 +120,15 @@ class Response
         return $out;
     }
 
+    /**
+     * @return array
+     */
     public function getEmail()
     {
+        if (!isset($this->data['email'])) {
+            return [];
+        }
+
         $out = [];
         foreach ($this->data['email'] as $item) {
             $out[] = new Item($item);
