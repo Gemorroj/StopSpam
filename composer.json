@@ -1,0 +1,28 @@
+{
+    "name": "gemorroj/stop-spam",
+    "description": "Wrapper for API stopforumspam.org",
+    "keywords": ["spam", "antispam", "blacklist"],
+    "type": "library",
+    "license": "LGPL-3.0",
+    "authors": [
+        {
+            "name": "Gemorroj"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8|^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "StopSpam\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "StopSpam\\Tests\\": "tests/"
+        }
+    }
+}
