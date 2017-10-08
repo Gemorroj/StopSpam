@@ -5,7 +5,37 @@
 
 ### Requirements:
 
-- PHP >= 5.3
+- PHP >= 5.5.9
+- ext-curl
 
 
-In progress...
+### Example:
+
+```php
+use StopSpam\Request;
+use StopSpam\Query;
+
+$query = new Query();
+$query->addIp('1.2.3.4');
+
+$request = new Request();
+$response = $request->send($query);
+$item = $response->getFlowingIp();
+var_dump($item->isAppears()); // bool (true)
+```
+
+##### Async example
+```php
+use StopSpam\Request;
+use StopSpam\Query;
+use StopSpam\Response;
+
+$query = new Query();
+$query->addIp('1.2.3.4');
+
+$request = new Request();
+$request->sendAsync($query, function (Response $response) {
+    $item = $response->getFlowingIp();
+    var_dump($item->isAppears()); // bool (true)
+});
+```

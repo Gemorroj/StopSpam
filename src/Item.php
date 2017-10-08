@@ -42,7 +42,7 @@ class Item
     /**
      * @return bool
      */
-    public function getAppears()
+    public function isAppears()
     {
         return 1 === $this->data['appears'];
     }
