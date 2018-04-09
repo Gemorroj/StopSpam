@@ -10,26 +10,15 @@
 
 
 ### Installation:
-
-- add to composer.json:
-
-```json
-{
-    "require": {
-        "gemorroj/stop-spam": "dev-master"
-    }
-}
-```
-- install:
-
 ```bash
-$ php composer.phar update gemorroj/stop-spam
+composer require gemorroj/stop-spam
 ```
 
 
 ### Example:
 
 ```php
+<?php
 use StopSpam\Request;
 use StopSpam\Query;
 
@@ -44,6 +33,7 @@ var_dump($item->isAppears()); // bool (true)
 
 ##### Async example
 ```php
+<?php
 use StopSpam\Request;
 use StopSpam\Query;
 use StopSpam\Response;
