@@ -27,7 +27,7 @@ class Request
     {
         $this->options = $options ?: new Options();
         $this->client = new Client([
-            'headers' => ['User-Agent' => 'StopSpam client [https://github.com/Gemorroj/stop-spam]']
+            'headers' => ['User-Agent' => 'StopSpam client [https://github.com/Gemorroj/StopSpam]']
         ]);
     }
 
@@ -36,6 +36,7 @@ class Request
      * @param Query $query
      * @return Response
      * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function send(Query $query)
     {

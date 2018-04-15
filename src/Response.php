@@ -35,17 +35,17 @@ class Response
 
 
     /**
-     * @return bool|Item
+     * @return null|Item
      */
     public function getFlowingIp()
     {
         if (!isset($this->data['ip'])) {
-            return false;
+            return null;
         }
 
         $value = \current($this->data['ip']);
         if (false === $value) {
-            return false;
+            return null;
         }
 
         \next($this->data['ip']);
@@ -53,17 +53,17 @@ class Response
     }
 
     /**
-     * @return bool|Item
+     * @return null|Item
      */
     public function getFlowingUsername()
     {
         if (!isset($this->data['username'])) {
-            return false;
+            return null;
         }
 
         $value = \current($this->data['username']);
         if (false === $value) {
-            return false;
+            return null;
         }
 
         \next($this->data['username']);
@@ -71,17 +71,17 @@ class Response
     }
 
     /**
-     * @return bool|Item
+     * @return null|Item
      */
     public function getFlowingEmail()
     {
         if (!isset($this->data['email'])) {
-            return false;
+            return null;
         }
 
         $value = \current($this->data['email']);
         if (false === $value) {
-            return false;
+            return null;
         }
 
         \next($this->data['email']);

@@ -33,7 +33,7 @@ class Options
     }
 
     /**
-     * @param string $scheme
+     * @param string $scheme http or https
      * @return $this
      */
     public function setScheme($scheme)

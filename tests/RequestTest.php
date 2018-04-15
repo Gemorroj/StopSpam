@@ -1,6 +1,7 @@
 <?php
 namespace StopSpam\Tests;
 
+use StopSpam\Item;
 use StopSpam\Request;
 use StopSpam\Query;
 use StopSpam\Response;
@@ -45,6 +46,11 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * @param Item|null $firstItem
+     * @param Item|null $secondItem
+     * @param Item|null $thirdItem
+     */
     private function checkIpResponse($firstItem, $secondItem, $thirdItem)
     {
         $this->assertEquals('1.2.3.4', $firstItem->getValue());
@@ -54,19 +60,25 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('1.2.3.5', $secondItem->getValue());
         $this->assertFalse($secondItem->isAppears());
 
-        $this->assertFalse($thirdItem);
+        $this->assertNull($thirdItem);
     }
 
+    /**
+     * @param Item|null $item
+     */
     private function checkUsernameResponse($item)
     {
         $this->assertEquals('putin', $item->getValue());
         $this->assertFalse($item->isAppears());
     }
 
+    /**
+     * @param Item|null $item
+     */
     private function checkEmailResponse($item)
     {
         $this->assertEquals('test@test.test', $item->getValue());
-        $this->assertTrue($item->isAppears());
+        $this->assertFalse($item->isAppears());
     }
 
     /**
