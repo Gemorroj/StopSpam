@@ -1,7 +1,6 @@
 <?php
 namespace StopSpam;
 
-
 class Query
 {
     private $query = [];
