@@ -2,8 +2,8 @@
 namespace StopSpam\Tests;
 
 use StopSpam\Item;
-use StopSpam\Request;
 use StopSpam\Query;
+use StopSpam\Request;
 use StopSpam\Response;
 
 class RequestTest extends \PHPUnit_Framework_TestCase

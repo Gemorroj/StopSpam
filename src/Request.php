@@ -2,9 +2,9 @@
 namespace StopSpam;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use StopSpam\Exception\RequestException;
 
 class Request
@@ -34,9 +34,9 @@ class Request
 
     /**
      * @param Query $query
-     * @return Response
      * @throws RequestException
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return Response
      */
     public function send(Query $query)
     {
