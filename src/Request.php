@@ -17,6 +17,10 @@ class Request
      * @var Client
      */
     private $client;
+    /**
+     * @var string
+     */
+    protected $apiHost = 'api.stopforumspam.org';
 
 
     /**
@@ -27,7 +31,10 @@ class Request
     {
         $this->options = $options ?: new Options();
         $this->client = new Client([
-            'headers' => ['User-Agent' => 'StopSpam client [https://github.com/Gemorroj/StopSpam]']
+            'headers' => [
+                'Accept-Encoding' => 'gzip,deflate',
+                'User-Agent' => 'StopSpam client [https://github.com/Gemorroj/StopSpam]',
+            ]
         ]);
     }
 
@@ -42,7 +49,7 @@ class Request
     {
         $response = $this->client->request('GET', Uri::fromParts([
             'scheme' => $this->options->getScheme(),
-            'host' => 'api.stopforumspam.org',
+            'host' => $this->apiHost,
             'path' => '/api',
             'query' => $query->build($this->options),
         ]));
@@ -63,7 +70,7 @@ class Request
     {
         $promise = $this->client->requestAsync('GET', Uri::fromParts([
             'scheme' => $this->options->getScheme(),
-            'host' => 'api.stopforumspam.org',
+            'host' => $this->apiHost,
             'path' => '/api',
             'query' => $query->build($this->options),
         ]));

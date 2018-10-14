@@ -1,4 +1,4 @@
-# Wrapper for API www.stopforumspam.com (api.stopforumspam.org) 
+# Wrapper for API [stopforumspam.com](https://www.stopforumspam.com/usage)
 
 [![Build Status](https://secure.travis-ci.org/Gemorroj/StopSpam.png?branch=master)](https://travis-ci.org/Gemorroj/StopSpam)
 
@@ -15,7 +15,7 @@ composer require gemorroj/stop-spam
 ```
 
 
-### Example:
+### Example check IP:
 
 ```php
 <?php
