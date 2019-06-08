@@ -1,8 +1,9 @@
 <?php
 namespace StopSpam;
 
-use Psr\Http\Message\ResponseInterface;
+
 use StopSpam\Exception\RequestException;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class Response
 {
@@ -15,10 +16,14 @@ class Response
      * Response constructor.
      * @param ResponseInterface $response
      * @throws RequestException
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function __construct(ResponseInterface $response)
     {
-        $this->data = \GuzzleHttp\json_decode((string)$response->getBody(), true);
+        $this->data = $response->toArray();
         if (1 !== $this->data['success']) {
             throw new RequestException('Error response: ' . $this->data['error']);
         }
@@ -28,7 +33,7 @@ class Response
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
@@ -37,7 +42,7 @@ class Response
     /**
      * @return null|Item
      */
-    public function getFlowingIp()
+    public function getFlowingIp(): ?Item
     {
         if (!isset($this->data['ip'])) {
             return null;
@@ -55,7 +60,7 @@ class Response
     /**
      * @return null|Item
      */
-    public function getFlowingUsername()
+    public function getFlowingUsername(): ?Item
     {
         if (!isset($this->data['username'])) {
             return null;
@@ -73,7 +78,7 @@ class Response
     /**
      * @return null|Item
      */
-    public function getFlowingEmail()
+    public function getFlowingEmail(): ?Item
     {
         if (!isset($this->data['email'])) {
             return null;
@@ -89,9 +94,9 @@ class Response
     }
 
     /**
-     * @return array
+     * @return Item[]
      */
-    public function getIp()
+    public function getIp(): array
     {
         if (!isset($this->data['ip'])) {
             return [];
@@ -105,9 +110,9 @@ class Response
     }
 
     /**
-     * @return array
+     * @return Item[]
      */
-    public function getUsername()
+    public function getUsername(): array
     {
         if (!isset($this->data['username'])) {
             return [];
@@ -121,9 +126,9 @@ class Response
     }
 
     /**
-     * @return array
+     * @return Item[]
      */
-    public function getEmail()
+    public function getEmail(): array
     {
         if (!isset($this->data['email'])) {
             return [];

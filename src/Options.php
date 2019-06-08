@@ -3,13 +3,12 @@ namespace StopSpam;
 
 class Options
 {
-    private $scheme = 'http';
     private $allowTor = false;
 
     /**
      * @return bool
      */
-    public function isAllowTor()
+    public function isAllowTor(): bool
     {
         return $this->allowTor;
     }
@@ -18,30 +17,9 @@ class Options
      * @param bool $allowTor
      * @return $this
      */
-    public function setAllowTor($allowTor)
+    public function setAllowTor(bool $allowTor): self
     {
         $this->allowTor = $allowTor;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getScheme()
-    {
-        return $this->scheme;
-    }
-
-    /**
-     * @param string $scheme http or https
-     * @return $this
-     */
-    public function setScheme($scheme)
-    {
-        if (!\in_array($scheme, ['http', 'https'], true)) {
-            throw new \InvalidArgumentException('Unsupported scheme. Support only "http" and "https" schemes.');
-        }
-        $this->scheme = $scheme;
         return $this;
     }
 }

@@ -1,14 +1,14 @@
 <?php
 namespace StopSpam\Tests;
 
+use PHPUnit\Framework\TestCase;
 use StopSpam\Item;
 use StopSpam\Query;
 use StopSpam\Request;
-use StopSpam\Response;
 
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends TestCase
 {
-    public function testSync()
+    public function testSend(): void
     {
         $query = new Query();
         $query->addIp('1.2.3.4');
@@ -29,33 +29,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->checkEmailResponse($response->getFlowingEmail());
     }
 
-    public function testAsync()
-    {
-        $query = new Query();
-        $query->addIp('1.2.3.4');
-        $query->addIp('1.2.3.5');
-
-        $request = new Request();
-        $request->sendAsync($query, function (Response $response) {
-            $this->checkIpResponse(
-                $response->getFlowingIp(),
-                $response->getFlowingIp(),
-                $response->getFlowingIp()
-            );
-        });
-    }
-
 
     /**
      * @param Item|null $firstItem
      * @param Item|null $secondItem
      * @param Item|null $thirdItem
      */
-    private function checkIpResponse($firstItem, $secondItem, $thirdItem)
+    private function checkIpResponse(?Item $firstItem, ?Item $secondItem, ?Item $thirdItem): void
     {
         $this->assertEquals('1.2.3.4', $firstItem->getValue());
         $this->assertTrue($firstItem->isAppears());
-        $this->assertEquals('au', $firstItem->getData()['country']);
+        $this->assertEquals('us', $firstItem->getData()['country']);
 
         $this->assertEquals('1.2.3.5', $secondItem->getValue());
         $this->assertFalse($secondItem->isAppears());
@@ -66,7 +50,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     /**
      * @param Item|null $item
      */
-    private function checkUsernameResponse($item)
+    private function checkUsernameResponse(?Item $item): void
     {
         $this->assertEquals('putin', $item->getValue());
         $this->assertFalse($item->isAppears());
@@ -75,23 +59,21 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     /**
      * @param Item|null $item
      */
-    private function checkEmailResponse($item)
+    private function checkEmailResponse(?Item $item): void
     {
         $this->assertEquals('test@test.test', $item->getValue());
         $this->assertFalse($item->isAppears());
     }
 
     /**
-     * @expectedException \StopSpam\Exception\RequestException
+     * @expectedException \Symfony\Component\HttpClient\Exception\ServerException
      */
-    public function testAsyncException()
+    public function testSendException(): void
     {
         $query = new Query();
         $query->addIp('fake ip');
 
         $request = new Request();
-        $request->sendAsync($query, function (Response $response) {
-            //nothing
-        });
+        $request->send($query);
     }
 }

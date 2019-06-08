@@ -5,8 +5,7 @@
 
 ### Requirements:
 
-- PHP >= 5.6
-- ext-curl
+- PHP >= 7.1
 
 
 ### Installation:
@@ -29,21 +28,4 @@ $request = new Request();
 $response = $request->send($query);
 $item = $response->getFlowingIp();
 var_dump($item->isAppears()); // bool (true)
-```
-
-##### Async example
-```php
-<?php
-use StopSpam\Request;
-use StopSpam\Query;
-use StopSpam\Response;
-
-$query = new Query();
-$query->addIp('1.2.3.4');
-
-$request = new Request();
-$request->sendAsync($query, function (Response $response) {
-    $item = $response->getFlowingIp();
-    var_dump($item->isAppears()); // bool (true)
-});
 ```

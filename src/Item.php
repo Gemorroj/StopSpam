@@ -17,7 +17,7 @@ class Item
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
@@ -25,7 +25,7 @@ class Item
     /**
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->data['value'];
     }
@@ -33,7 +33,7 @@ class Item
     /**
      * @return float
      */
-    public function getFrequency()
+    public function getFrequency(): float
     {
         return $this->data['frequency'];
     }
@@ -41,7 +41,7 @@ class Item
     /**
      * @return bool
      */
-    public function isAppears()
+    public function isAppears(): bool
     {
         return 1 === $this->data['appears'];
     }

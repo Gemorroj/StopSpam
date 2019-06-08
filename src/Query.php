@@ -9,7 +9,7 @@ class Query
      * @param string $ip
      * @return $this
      */
-    public function addIp($ip)
+    public function addIp(string $ip): self
     {
         $this->query['ip'][] = $ip;
         return $this;
@@ -19,7 +19,7 @@ class Query
      * @param string $username
      * @return $this
      */
-    public function addUsername($username)
+    public function addUsername(string $username): self
     {
         $this->query['username'][] = $username;
         return $this;
@@ -29,7 +29,7 @@ class Query
      * @param string $email
      * @return $this
      */
-    public function addEmail($email)
+    public function addEmail(string $email): self
     {
         $this->query['email'][] = $email;
         return $this;
@@ -37,24 +37,18 @@ class Query
 
     /**
      * @param Options $options
-     * @return string
+     * @return array
      */
-    public function build(Options $options)
+    public function build(Options $options): array
     {
-        $query = \http_build_query(
-            $this->query,
-            null,
-            '&',
-            \PHP_QUERY_RFC3986
-        );
-
+        $result = $this->query;
         if ($options->isAllowTor()) {
-            $query .= '&notorexit';
+            $result['notorexit'] = '';
         }
 
-        $query .= '&json';
-        $query .= '&unix';
+        $result['json'] = '';
+        $result['unix'] = '';
 
-        return $query;
+        return $result;
     }
 }

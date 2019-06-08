@@ -1,11 +1,9 @@
 <?php
 namespace StopSpam;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
-use GuzzleHttp\Psr7\Uri;
-use Psr\Http\Message\ResponseInterface;
 use StopSpam\Exception\RequestException;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Request
 {
@@ -14,25 +12,25 @@ class Request
      */
     private $options;
     /**
-     * @var Client
+     * @var HttpClient
      */
-    private $client;
+    private $httpClient;
     /**
      * @var string
      */
-    protected $apiHost = 'api.stopforumspam.org';
+    protected $apiEndpoint = 'https://api.stopforumspam.org/api';
 
 
     /**
      * Request constructor.
+     * @param HttpClientInterface|null $httpClient
      * @param Options|null $options
      */
-    public function __construct(Options $options = null)
+    public function __construct(HttpClientInterface $httpClient = null, Options $options = null)
     {
         $this->options = $options ?: new Options();
-        $this->client = new Client([
+        $this->httpClient = $httpClient ?: HttpClient::create([
             'headers' => [
-                'Accept-Encoding' => 'gzip,deflate',
                 'User-Agent' => 'StopSpam client [https://github.com/Gemorroj/StopSpam]',
             ]
         ]);
@@ -42,50 +40,18 @@ class Request
     /**
      * @param Query $query
      * @throws RequestException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      * @return Response
      */
-    public function send(Query $query)
+    public function send(Query $query): Response
     {
-        $response = $this->client->request('GET', Uri::fromParts([
-            'scheme' => $this->options->getScheme(),
-            'host' => $this->apiHost,
-            'path' => '/api',
+        $response = $this->httpClient->request('GET', $this->apiEndpoint, [
             'query' => $query->build($this->options),
-        ]));
-
-        if (200 !== $response->getStatusCode()) {
-            throw new RequestException('Invalid HTTP response code');
-        }
+        ]);
 
         return new Response($response);
-    }
-
-
-    /**
-     * @param Query $query
-     * @param callable $fn
-     */
-    public function sendAsync(Query $query, callable $fn)
-    {
-        $promise = $this->client->requestAsync('GET', Uri::fromParts([
-            'scheme' => $this->options->getScheme(),
-            'host' => $this->apiHost,
-            'path' => '/api',
-            'query' => $query->build($this->options),
-        ]));
-
-        $promise->then(
-            function (ResponseInterface $response) use ($fn) {
-                if (200 !== $response->getStatusCode()) {
-                    throw new RequestException('Invalid HTTP response code');
-                }
-
-                $fn(new Response($response));
-            },
-            function (GuzzleRequestException $e) {
-                throw new RequestException('Unable send request', 0, $e);
-            }
-        )->wait(true);
     }
 }
