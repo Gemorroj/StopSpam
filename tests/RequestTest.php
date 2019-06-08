@@ -39,7 +39,7 @@ class RequestTest extends TestCase
     {
         $this->assertEquals('1.2.3.4', $firstItem->getValue());
         $this->assertTrue($firstItem->isAppears());
-        $this->assertEquals('us', $firstItem->getData()['country']);
+        $this->assertStringMatchesFormat('%s', $firstItem->getData()['country']);
 
         $this->assertEquals('1.2.3.5', $secondItem->getValue());
         $this->assertFalse($secondItem->isAppears());
