@@ -1,4 +1,5 @@
 <?php
+
 namespace StopSpam\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -28,7 +29,6 @@ class RequestTest extends TestCase
         $this->checkUsernameResponse($response->getFlowingUsername());
         $this->checkEmailResponse($response->getFlowingEmail());
     }
-
 
     /**
      * @param Item|null $firstItem

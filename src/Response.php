@@ -1,6 +1,6 @@
 <?php
-namespace StopSpam;
 
+namespace StopSpam;
 
 use StopSpam\Exception\RequestException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -14,7 +14,9 @@ class Response
 
     /**
      * Response constructor.
+     *
      * @param ResponseInterface $response
+     *
      * @throws RequestException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -25,10 +27,9 @@ class Response
     {
         $this->data = $response->toArray();
         if (1 !== $this->data['success']) {
-            throw new RequestException('Error response: ' . $this->data['error']);
+            throw new RequestException('Error response: '.$this->data['error']);
         }
     }
-
 
     /**
      * @return array
@@ -38,9 +39,8 @@ class Response
         return $this->data;
     }
 
-
     /**
-     * @return null|Item
+     * @return Item|null
      */
     public function getFlowingIp(): ?Item
     {
@@ -54,11 +54,12 @@ class Response
         }
 
         \next($this->data['ip']);
+
         return new Item($value);
     }
 
     /**
-     * @return null|Item
+     * @return Item|null
      */
     public function getFlowingUsername(): ?Item
     {
@@ -72,11 +73,12 @@ class Response
         }
 
         \next($this->data['username']);
+
         return new Item($value);
     }
 
     /**
-     * @return null|Item
+     * @return Item|null
      */
     public function getFlowingEmail(): ?Item
     {
@@ -90,6 +92,7 @@ class Response
         }
 
         \next($this->data['email']);
+
         return new Item($value);
     }
 
@@ -106,6 +109,7 @@ class Response
         foreach ($this->data['ip'] as $item) {
             $out[] = new Item($item);
         }
+
         return $out;
     }
 
@@ -122,6 +126,7 @@ class Response
         foreach ($this->data['username'] as $item) {
             $out[] = new Item($item);
         }
+
         return $out;
     }
 
@@ -138,6 +143,7 @@ class Response
         foreach ($this->data['email'] as $item) {
             $out[] = new Item($item);
         }
+
         return $out;
     }
 }

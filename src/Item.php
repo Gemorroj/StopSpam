@@ -1,4 +1,5 @@
 <?php
+
 namespace StopSpam;
 
 class Item
@@ -7,6 +8,7 @@ class Item
 
     /**
      * Item constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data = [])

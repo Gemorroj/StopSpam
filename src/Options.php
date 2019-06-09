@@ -1,4 +1,5 @@
 <?php
+
 namespace StopSpam;
 
 class Options
@@ -15,11 +16,13 @@ class Options
 
     /**
      * @param bool $allowTor
+     *
      * @return $this
      */
     public function setAllowTor(bool $allowTor): self
     {
         $this->allowTor = $allowTor;
+
         return $this;
     }
 }
