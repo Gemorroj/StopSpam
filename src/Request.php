@@ -21,12 +21,6 @@ class Request
      */
     protected $apiEndpoint = 'https://api.stopforumspam.org/api';
 
-    /**
-     * Request constructor.
-     *
-     * @param HttpClientInterface|null $httpClient
-     * @param Options|null             $options
-     */
     public function __construct(HttpClientInterface $httpClient = null, Options $options = null)
     {
         $this->options = $options ?: new Options();
@@ -38,15 +32,11 @@ class Request
     }
 
     /**
-     * @param Query $query
-     *
      * @throws RequestException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
-     *
-     * @return Response
      */
     public function send(Query $query): Response
     {

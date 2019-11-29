@@ -7,8 +7,6 @@ class Query
     private $query = [];
 
     /**
-     * @param string $ip
-     *
      * @return $this
      */
     public function addIp(string $ip): self
@@ -19,8 +17,6 @@ class Query
     }
 
     /**
-     * @param string $username
-     *
      * @return $this
      */
     public function addUsername(string $username): self
@@ -31,8 +27,6 @@ class Query
     }
 
     /**
-     * @param string $email
-     *
      * @return $this
      */
     public function addEmail(string $email): self
@@ -42,11 +36,6 @@ class Query
         return $this;
     }
 
-    /**
-     * @param Options $options
-     *
-     * @return array
-     */
     public function build(Options $options): array
     {
         $result = $this->query;

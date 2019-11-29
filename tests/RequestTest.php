@@ -30,11 +30,6 @@ class RequestTest extends TestCase
         $this->checkEmailResponse($response->getFlowingEmail());
     }
 
-    /**
-     * @param Item|null $firstItem
-     * @param Item|null $secondItem
-     * @param Item|null $thirdItem
-     */
     private function checkIpResponse(?Item $firstItem, ?Item $secondItem, ?Item $thirdItem): void
     {
         $this->assertEquals('1.2.3.4', $firstItem->getValue());
@@ -47,18 +42,12 @@ class RequestTest extends TestCase
         $this->assertNull($thirdItem);
     }
 
-    /**
-     * @param Item|null $item
-     */
     private function checkUsernameResponse(?Item $item): void
     {
         $this->assertEquals('putin', $item->getValue());
         $this->assertFalse($item->isAppears());
     }
 
-    /**
-     * @param Item|null $item
-     */
     private function checkEmailResponse(?Item $item): void
     {
         $this->assertEquals('test@test.test', $item->getValue());

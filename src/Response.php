@@ -15,8 +15,6 @@ class Response
     /**
      * Response constructor.
      *
-     * @param ResponseInterface $response
-     *
      * @throws RequestException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -31,17 +29,11 @@ class Response
         }
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @return Item|null
-     */
     public function getFlowingIp(): ?Item
     {
         if (!isset($this->data['ip'])) {
@@ -58,9 +50,6 @@ class Response
         return new Item($value);
     }
 
-    /**
-     * @return Item|null
-     */
     public function getFlowingUsername(): ?Item
     {
         if (!isset($this->data['username'])) {
@@ -77,9 +66,6 @@ class Response
         return new Item($value);
     }
 
-    /**
-     * @return Item|null
-     */
     public function getFlowingEmail(): ?Item
     {
         if (!isset($this->data['email'])) {
