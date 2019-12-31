@@ -11,9 +11,6 @@ class Options
         return $this->allowTor;
     }
 
-    /**
-     * @return $this
-     */
     public function setAllowTor(bool $allowTor): self
     {
         $this->allowTor = $allowTor;

@@ -6,9 +6,6 @@ class Query
 {
     private $query = [];
 
-    /**
-     * @return $this
-     */
     public function addIp(string $ip): self
     {
         $this->query['ip'][] = $ip;
@@ -16,9 +13,6 @@ class Query
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function addUsername(string $username): self
     {
         $this->query['username'][] = $username;
@@ -26,9 +20,6 @@ class Query
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function addEmail(string $email): self
     {
         $this->query['email'][] = $email;
