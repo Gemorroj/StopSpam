@@ -20,10 +20,14 @@ class RequestTest extends TestCase
         $request = new Request();
         $response = $request->send($query);
 
+        $firstItem = $response->getFlowingIp();
+        $secondItem = $response->getFlowingIp();
+        $thirdItem = $response->getFlowingIp();
+
         $this->checkIpResponse(
-            $response->getFlowingIp(),
-            $response->getFlowingIp(),
-            $response->getFlowingIp()
+            $firstItem,
+            $secondItem,
+            $thirdItem
         );
 
         $this->checkUsernameResponse($response->getFlowingUsername());
@@ -32,37 +36,41 @@ class RequestTest extends TestCase
 
     private function checkIpResponse(?Item $firstItem, ?Item $secondItem, ?Item $thirdItem): void
     {
-        $this->assertEquals('1.2.3.4', $firstItem->getValue());
-        $this->assertTrue($firstItem->isAppears());
-        $this->assertStringMatchesFormat('%s', $firstItem->getData()['country']);
+        self::assertEquals('1.2.3.5', $firstItem->getValue());
+        self::assertFalse($firstItem->isAppears());
+        self::assertFalse($firstItem->isError());
 
-        $this->assertEquals('1.2.3.5', $secondItem->getValue());
-        $this->assertFalse($secondItem->isAppears());
+        self::assertEquals('1.2.3.4', $secondItem->getValue());
+        self::assertTrue($secondItem->isAppears());
+        self::assertStringMatchesFormat('%s', $secondItem->getData()['delegated']);
+        self::assertFalse($firstItem->isError());
 
-        $this->assertNull($thirdItem);
+        self::assertNull($thirdItem);
     }
 
     private function checkUsernameResponse(?Item $item): void
     {
-        $this->assertEquals('putin', $item->getValue());
-        $this->assertFalse($item->isAppears());
+        self::assertEquals('putin', $item->getValue());
+        self::assertTrue($item->isAppears());
     }
 
     private function checkEmailResponse(?Item $item): void
     {
-        $this->assertEquals('test@test.test', $item->getValue());
-        $this->assertFalse($item->isAppears());
+        self::assertEquals('test@test.test', $item->getValue());
+        self::assertFalse($item->isAppears());
     }
 
-    /**
-     * @expectedException \Symfony\Component\HttpClient\Exception\ServerException
-     */
-    public function testSendException(): void
+    public function testSendInvalidIp(): void
     {
         $query = new Query();
         $query->addIp('fake ip');
 
         $request = new Request();
-        $request->send($query);
+        $response = $request->send($query);
+
+        $v = $response->getFlowingIp();
+
+        self::assertTrue($v->isError());
+        self::assertStringMatchesFormat('%s', $v->getError());
     }
 }

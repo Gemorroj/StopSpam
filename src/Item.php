@@ -16,18 +16,28 @@ class Item
         return $this->data;
     }
 
-    public function getValue(): string
+    public function getValue(): ?string
     {
-        return $this->data['value'];
+        return $this->data['value'] ?? null;
     }
 
-    public function getFrequency(): float
+    public function getFrequency(): ?float
     {
-        return $this->data['frequency'];
+        return $this->data['frequency'] ?? null;
+    }
+
+    public function isError(): bool
+    {
+        return isset($this->data['error']);
+    }
+
+    public function getError(): ?string
+    {
+        return $this->data['error'] ?? null;
     }
 
     public function isAppears(): bool
     {
-        return 1 === $this->data['appears'];
+        return 1 === ($this->data['appears'] ?? null);
     }
 }
