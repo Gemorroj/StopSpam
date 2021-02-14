@@ -3,7 +3,7 @@
     "description": "Wrapper for API www.stopforumspam.com (api.stopforumspam.org)",
     "keywords": ["stopforumspam", "antispam", "blacklist", "spam-filtering", "spam-protection", "spam-detection"],
     "type": "library",
-    "license": "LGPL-3.0",
+    "license": "LGPL-3.0-or-later",
     "authors": [
         {
             "name": "Gemorroj"
