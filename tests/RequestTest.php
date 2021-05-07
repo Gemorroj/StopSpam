@@ -12,7 +12,6 @@ class RequestTest extends TestCase
     public function testSend(): void
     {
         $query = new Query();
-        $query->addIp('1.2.3.4');
         $query->addIp('1.2.3.5');
         $query->addUsername('putin');
         $query->addEmail('test@test.test');
@@ -22,30 +21,16 @@ class RequestTest extends TestCase
 
         $firstItem = $response->getFlowingIp();
         $secondItem = $response->getFlowingIp();
-        $thirdItem = $response->getFlowingIp();
 
-        $this->checkIpResponse(
-            $firstItem,
-            $secondItem,
-            $thirdItem
-        );
+        self::assertEquals('1.2.3.5', $firstItem->getValue());
+        self::assertFalse($firstItem->isAppears());
+        self::assertIsNumeric($firstItem->getFrequency());
+        self::assertFalse($firstItem->isError());
+
+        self::assertNull($secondItem);
 
         $this->checkUsernameResponse($response->getFlowingUsername());
         $this->checkEmailResponse($response->getFlowingEmail());
-    }
-
-    private function checkIpResponse(?Item $firstItem, ?Item $secondItem, ?Item $thirdItem): void
-    {
-        self::assertEquals('1.2.3.5', $firstItem->getValue());
-        self::assertFalse($firstItem->isAppears());
-        self::assertFalse($firstItem->isError());
-
-        self::assertEquals('1.2.3.4', $secondItem->getValue());
-        self::assertTrue($secondItem->isAppears());
-        self::assertStringMatchesFormat('%s', $secondItem->getData()['delegated']);
-        self::assertFalse($firstItem->isError());
-
-        self::assertNull($thirdItem);
     }
 
     private function checkUsernameResponse(?Item $item): void
