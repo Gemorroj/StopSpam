@@ -36,13 +36,13 @@ class RequestTest extends TestCase
     private function checkUsernameResponse(?Item $item): void
     {
         self::assertEquals('putin', $item->getValue());
-        self::assertTrue($item->isAppears());
+        self::assertFalse($item->isAppears());
     }
 
     private function checkEmailResponse(?Item $item): void
     {
         self::assertEquals('test@test.test', $item->getValue());
-        self::assertFalse($item->isAppears());
+        self::assertTrue($item->isAppears());
     }
 
     public function testSendInvalidIp(): void
