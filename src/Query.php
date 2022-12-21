@@ -4,7 +4,7 @@ namespace StopSpam;
 
 class Query
 {
-    private $query = [];
+    private array $query = [];
 
     public function addIp(string $ip): self
     {

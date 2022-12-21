@@ -7,10 +7,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class Response
 {
-    /**
-     * @var array
-     */
-    private $data;
+    private array $data;
 
     /**
      * Response constructor.

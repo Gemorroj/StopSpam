@@ -4,7 +4,7 @@ namespace StopSpam;
 
 class Item
 {
-    private $data;
+    private array $data;
 
     public function __construct(array $data = [])
     {

@@ -4,7 +4,7 @@ namespace StopSpam;
 
 class Options
 {
-    private $allowTor = false;
+    private bool $allowTor = false;
 
     public function isAllowTor(): bool
     {

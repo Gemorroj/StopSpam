@@ -8,18 +8,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Request
 {
-    /**
-     * @var Options
-     */
-    private $options;
-    /**
-     * @var HttpClient
-     */
-    private $httpClient;
-    /**
-     * @var string
-     */
-    protected $apiEndpoint = 'https://api.stopforumspam.org/api';
+    private Options $options;
+    private HttpClientInterface $httpClient;
+    protected string $apiEndpoint = 'https://api.stopforumspam.org/api';
 
     public function __construct(HttpClientInterface $httpClient = null, Options $options = null)
     {
