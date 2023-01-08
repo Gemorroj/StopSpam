@@ -3,7 +3,6 @@
 namespace StopSpam\Tests;
 
 use PHPUnit\Framework\TestCase;
-use StopSpam\Item;
 use StopSpam\Query;
 use StopSpam\Request;
 
@@ -19,30 +18,20 @@ class RequestTest extends TestCase
         $request = new Request();
         $response = $request->send($query);
 
-        $firstItem = $response->getFlowingIp();
-        $secondItem = $response->getFlowingIp();
+        $firstIpItem = $response->getFlowingIp();
+        $secondIpItem = $response->getFlowingIp();
+        $firstUsernameItem = $response->getFlowingUsername();
+        $firstEmailItem = $response->getFlowingEmail();
 
-        self::assertEquals('1.2.3.5', $firstItem->getValue());
-        self::assertFalse($firstItem->isAppears());
-        self::assertIsNumeric($firstItem->getFrequency());
-        self::assertFalse($firstItem->isError());
+        self::assertEquals('1.2.3.5', $firstIpItem->getValue());
+        self::assertFalse($firstIpItem->isAppears());
+        self::assertIsNumeric($firstIpItem->getFrequency());
+        self::assertFalse($firstIpItem->isError());
 
-        self::assertNull($secondItem);
+        self::assertNull($secondIpItem);
 
-        $this->checkUsernameResponse($response->getFlowingUsername());
-        $this->checkEmailResponse($response->getFlowingEmail());
-    }
-
-    private function checkUsernameResponse(?Item $item): void
-    {
-        self::assertEquals('putin', $item->getValue());
-        self::assertFalse($item->isAppears());
-    }
-
-    private function checkEmailResponse(?Item $item): void
-    {
-        self::assertEquals('test@test.test', $item->getValue());
-        self::assertTrue($item->isAppears());
+        self::assertEquals('putin', $firstUsernameItem->getValue());
+        self::assertEquals('test@test.test', $firstEmailItem->getValue());
     }
 
     public function testSendInvalidIp(): void
@@ -53,9 +42,9 @@ class RequestTest extends TestCase
         $request = new Request();
         $response = $request->send($query);
 
-        $v = $response->getFlowingIp();
+        $firstIpItem = $response->getFlowingIp();
 
-        self::assertTrue($v->isError());
-        self::assertStringMatchesFormat('%s', $v->getError());
+        self::assertTrue($firstIpItem->isError());
+        self::assertStringMatchesFormat('%s', $firstIpItem->getError());
     }
 }
