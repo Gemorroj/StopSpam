@@ -14,7 +14,7 @@ class Request
     private HttpClientInterface $httpClient;
     protected string $apiEndpoint = 'https://api.stopforumspam.org/api';
 
-    public function __construct(HttpClientInterface $httpClient = null, Options $options = null)
+    public function __construct(?HttpClientInterface $httpClient = null, ?Options $options = null)
     {
         $this->options = $options ?: new Options();
         $this->httpClient = $httpClient ?: HttpClient::create([
