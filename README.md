@@ -1,6 +1,6 @@
 # Wrapper for API [stopforumspam.com](https://www.stopforumspam.com/usage)
 
-[![Continuous Integration](https://github.com/Gemorroj/StopSpam/workflows/Continuous%20Integration/badge.svg?branch=master)](https://github.com/Gemorroj/StopSpam/actions?query=workflow%3A%22Continuous+Integration%22)
+[![Continuous Integration](https://github.com/Gemorroj/StopSpam/workflows/Continuous%20Integration/badge.svg)](https://github.com/Gemorroj/StopSpam/actions?query=workflow%3A%22Continuous+Integration%22)
 
 
 ### Requirements:
