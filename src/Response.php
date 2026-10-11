@@ -24,66 +24,39 @@ class Response
     public function __construct(ResponseInterface $response)
     {
         $this->data = $response->toArray();
-        if (1 !== $this->data['success']) {
-            throw new RequestException('Error response: '.$this->data['error']);
+        $success = $this->data['success'] ?? null;
+        if (1 !== $success) {
+            $error = $this->data['error'] ?? 'unknown error';
+
+            throw new RequestException('Error response: '.$error);
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    public function getFlowingIp(): ?Item
+    public function getSingleIp(): ?Item
     {
-        if (!isset($this->data['ip'])) {
-            return null;
-        }
-
-        $value = \current($this->data['ip']);
-        if (false === $value) {
-            return null;
-        }
-
-        \next($this->data['ip']);
-
-        return new Item($value);
+        return $this->getIp()[0] ?? null;
     }
 
-    public function getFlowingUsername(): ?Item
+    public function getSingleUsername(): ?Item
     {
-        if (!isset($this->data['username'])) {
-            return null;
-        }
-
-        $value = \current($this->data['username']);
-        if (false === $value) {
-            return null;
-        }
-
-        \next($this->data['username']);
-
-        return new Item($value);
+        return $this->getUsername()[0] ?? null;
     }
 
-    public function getFlowingEmail(): ?Item
+    public function getSingleEmail(): ?Item
     {
-        if (!isset($this->data['email'])) {
-            return null;
-        }
-
-        $value = \current($this->data['email']);
-        if (false === $value) {
-            return null;
-        }
-
-        \next($this->data['email']);
-
-        return new Item($value);
+        return $this->getEmail()[0] ?? null;
     }
 
     /**
-     * @return Item[]
+     * @return list<Item>
      */
     public function getIp(): array
     {
@@ -100,7 +73,7 @@ class Response
     }
 
     /**
-     * @return Item[]
+     * @return list<Item>
      */
     public function getUsername(): array
     {
@@ -117,7 +90,7 @@ class Response
     }
 
     /**
-     * @return Item[]
+     * @return list<Item>
      */
     public function getEmail(): array
     {

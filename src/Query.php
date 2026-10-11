@@ -6,6 +6,9 @@ namespace StopSpam;
 
 class Query
 {
+    /**
+     * @var array<string, list<string>>
+     */
     private array $query = [];
 
     public function addIp(string $ip): self
@@ -29,11 +32,16 @@ class Query
         return $this;
     }
 
+    /**
+     * @return array<string, list<string>|string>
+     */
     public function build(Options $options): array
     {
         $result = $this->query;
-        if ($options->isAllowTor()) {
-            $result['notorexit'] = '';
+        $result[$options->isAllowTor() ? 'notorexit' : 'badtorexit'] = '';
+
+        if (null !== $options->getExpire()) {
+            $result['expire'] = (string) $options->getExpire();
         }
 
         $result['json'] = '';

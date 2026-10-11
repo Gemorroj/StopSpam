@@ -13,27 +13,28 @@ class RequestTest extends TestCase
     public function testSend(): void
     {
         $query = new Query();
-        $query->addIp('1.2.3.5');
+        $query->addIp('192.0.2.1');
         $query->addUsername('putin');
         $query->addEmail('test@test.test');
 
         $request = new Request();
         $response = $request->send($query);
 
-        $firstIpItem = $response->getFlowingIp();
-        $secondIpItem = $response->getFlowingIp();
-        $firstUsernameItem = $response->getFlowingUsername();
-        $firstEmailItem = $response->getFlowingEmail();
+        $ipItems = $response->getIp();
+        self::assertCount(1, $ipItems);
 
-        self::assertEquals('1.2.3.5', $firstIpItem->getValue());
+        $firstIpItem = $ipItems[0];
+        self::assertSame('192.0.2.1', $firstIpItem->getValue());
         self::assertFalse($firstIpItem->isAppears());
         self::assertIsNumeric($firstIpItem->getFrequency());
         self::assertFalse($firstIpItem->isError());
 
-        self::assertNull($secondIpItem);
+        self::assertSame('putin', $response->getUsername()[0]->getValue());
+        self::assertSame('test@test.test', $response->getEmail()[0]->getValue());
 
-        self::assertEquals('putin', $firstUsernameItem->getValue());
-        self::assertEquals('test@test.test', $firstEmailItem->getValue());
+        self::assertSame('192.0.2.1', $response->getSingleIp()?->getValue());
+        self::assertSame('putin', $response->getSingleUsername()?->getValue());
+        self::assertSame('test@test.test', $response->getSingleEmail()?->getValue());
     }
 
     public function testSendInvalidIp(): void
@@ -44,7 +45,7 @@ class RequestTest extends TestCase
         $request = new Request();
         $response = $request->send($query);
 
-        $firstIpItem = $response->getFlowingIp();
+        $firstIpItem = $response->getIp()[0];
 
         self::assertTrue($firstIpItem->isError());
         self::assertStringMatchesFormat('%s', $firstIpItem->getError());

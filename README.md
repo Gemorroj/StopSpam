@@ -26,6 +26,6 @@ $query->addIp('1.2.3.4');
 
 $request = new Request();
 $response = $request->send($query);
-$item = $response->getFlowingIp();
-var_dump($item->isAppears()); // bool (true)
+$item = $response->getSingleIp();
+var_dump($item->isAppears()); // bool (true/false)
 ```
