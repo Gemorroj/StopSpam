@@ -18,22 +18,22 @@ class QueryTest extends TestCase
         $result = $query->build(new Options());
 
         self::assertSame(['1.2.3.4'], $result['ip']);
-        self::assertArrayHasKey('badtorexit', $result);
-        self::assertArrayNotHasKey('notorexit', $result);
+        self::assertArrayHasKey('notorexit', $result);
+        self::assertArrayNotHasKey('badtorexit', $result);
         self::assertArrayNotHasKey('expire', $result);
         self::assertSame('', $result['json']);
         self::assertSame('', $result['unix']);
     }
 
-    public function testBuildAllowTor(): void
+    public function testBuildTorForbidden(): void
     {
         $query = new Query();
         $query->addIp('1.2.3.4');
 
-        $result = $query->build((new Options())->setAllowTor(true));
+        $result = $query->build((new Options())->setAllowTor(false));
 
-        self::assertArrayHasKey('notorexit', $result);
-        self::assertArrayNotHasKey('badtorexit', $result);
+        self::assertArrayHasKey('badtorexit', $result);
+        self::assertArrayNotHasKey('notorexit', $result);
     }
 
     public function testBuildExpire(): void
