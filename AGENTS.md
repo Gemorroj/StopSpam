@@ -7,7 +7,7 @@ Guidance for AI coding agents working in this repository.
 PHP library that wraps the [stopforumspam.com](https://www.stopforumspam.com/usage) API.
 Namespace: `StopSpam\` (PSR-4, mapped to `src/`).
 
-- Runtime: PHP >= 8.2
+- Runtime: PHP >= 8.4
 - Dependency: `symfony/http-client`
 - License: LGPL-3.0-or-later
 
