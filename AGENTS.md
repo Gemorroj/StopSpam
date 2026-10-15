@@ -37,4 +37,5 @@ Do not add comments unless asked.
 - Source lives in `src/`, tests in `tests/`, following the existing PSR-4 layout.
 - Write PHPUnit tests for any behavior changes (see `tests/RequestTest.php` for patterns).
 - Keep the public API in line with the `README.md` usage examples.
+- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/).
 - Do not commit changes unless explicitly requested.
